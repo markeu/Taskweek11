@@ -1,4 +1,9 @@
-version 2.1
+orbs:
+  node: circleci/node@4.0.0
 
-test
-- npm test
+version: 2.1
+
+workflows:
+  matrix-tests:
+    jobs:
+      - node/test
