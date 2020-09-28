@@ -14,7 +14,7 @@ const includeAccessToken = (user) => {
   };
 
   let userObject = user.toJSON();
-  const token = jwt.sign(payload, process.env.JWT_SECRET);
+  const token = jwt.sign(payload, "hilariousmofo");
   userObject["token"] = token;
   return userObject;
 };
