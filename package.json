@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "nodemon --watch",
-        "test": "jest /Users/macuser/Desktop/taskweek11/__test__/queries.spec.ts --forceExit"
+        "test": "jest --forceExit"
     },
     "repository": {
         "type": "git",
