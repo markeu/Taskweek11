@@ -80,7 +80,7 @@ describe("Test for query", () => {
       .post("/graphql")
       .send({
         query:
-          'mutation{signUpUser(email: "charlytty@gmail.com", password: "journals", firstName: "Uche", lastName:"Mark"){lastName, email}}',
+          'mutation{signUpUser(email: "philli@gmail.com", password: "journals", firstName: "Uche", lastName:"Mark"){lastName, email}}',
       })
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -90,7 +90,7 @@ describe("Test for query", () => {
         expect(res.body.data.signUpUser).toHaveProperty("lastName", "Mark");
         expect(res.body.data.signUpUser).toHaveProperty(
           "email",
-          "charlytty@gmail.com"
+          "philli@gmail.com"
         );
         done();
       });
@@ -185,7 +185,7 @@ describe("Test for query", () => {
       .post("/graphql")
       .send({
         query:
-          'mutation{ deleteUserByEmail(email: "charlytty@gmail.com",){lastName, email}}',
+          'mutation{ deleteUserByEmail(email: "philli@gmail.com",){lastName, email}}',
       })
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
@@ -198,7 +198,7 @@ describe("Test for query", () => {
         );
         expect(res.body.data.deleteUserByEmail).toHaveProperty(
           "email",
-          "charlytty@gmail.com"
+          "philli@gmail.com"
         );
         done();
       });
