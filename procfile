@@ -1,1 +1,1 @@
-worker: nodemon --watch
+worker: nodemon
