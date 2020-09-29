@@ -1,31 +1,19 @@
-import server from "../app";
 import supertest from "supertest";
+import mongoose from "mongoose";
+import server from "../app";
 
 const request = supertest(server);
 
-const createuser = {
-  signUpUser(
-    firstName: "Mark",
-    lastName: "Francis",
-    email: "koporategee@yahoo.com",
-    password: "Hilarious"
-  ) {
-    firstName;
-    lastName;
-  },
-};
+beforeAll((done) => {
+  done();
+});
 
-const createOrg = {
-  organization: "PMB",
-  marketValue: "56%",
-  address: "Cape de verde",
-  ceo: "Madubuko JOhn",
-  employees: ["hfjfjjjf", "djfjjfjjf"],
-  products: ["hhhfhhfhf", "fjjfjjfkfkkf"],
-};
+afterAll(() => {
+  mongoose.connection.close();
+});
 
 describe("Test for query", () => {
-  it("it should get all organizations from the datbase", (done) => {
+  it("it should get all organizations from the database", (done) => {
     request
       .post("/graphql")
       .send({

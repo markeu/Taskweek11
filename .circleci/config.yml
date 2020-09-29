@@ -7,4 +7,3 @@ workflows:
   matrix-tests:
     jobs:
       - node/test
-no_output_timeout: 50m

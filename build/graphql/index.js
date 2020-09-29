@@ -20,6 +20,8 @@ const RootMutation = new graphql_1.GraphQLObjectType({
         postOrganization: mutations_1.createOrg(),
         updateOrganization: mutations_1.updateOrg(),
         deleteOrganization: mutations_1.deleteOrg(),
+        deleteOrganizationByCompany: mutations_1.deleteOrgByCompany(),
+        deleteUserByEmail: mutations_1.deleteUserFromDb(),
     },
 });
 exports.default = new graphql_1.GraphQLSchema({

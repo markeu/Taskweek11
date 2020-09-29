@@ -7,13 +7,16 @@ exports.findOne = exports.findAll = void 0;
 const graphql_1 = require("graphql");
 const organization_1 = __importDefault(require("../types/organization"));
 const resolvers_1 = __importDefault(require("../resolvers"));
+const authenticate_1 = require("../../utils/authenticate");
 const { index, single } = resolvers_1.default;
 exports.findAll = () => {
     return {
         type: new graphql_1.GraphQLList(organization_1.default),
         description: "This will return all the organization found in the database",
         resolve(parent, args, context, info) {
-            return index();
+            if (authenticate_1.isAuthenticated(context)) {
+                return index();
+            }
         },
     };
 };
@@ -28,7 +31,9 @@ exports.findOne = () => {
             },
         },
         resolve(parent, args, context, info) {
-            return single({ organization: args.organization });
+            if (authenticate_1.isAuthenticated(context)) {
+                return single({ organization: args.organization });
+            }
         },
     };
 };

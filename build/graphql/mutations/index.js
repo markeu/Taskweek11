@@ -3,12 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrg = exports.updateOrg = exports.createOrg = exports.signUp = exports.signIn = void 0;
+exports.deleteUserFromDb = exports.deleteOrgByCompany = exports.deleteOrg = exports.updateOrg = exports.createOrg = exports.signUp = exports.signIn = void 0;
 const user_1 = __importDefault(require("../types/user"));
 const resolvers_1 = __importDefault(require("../resolvers"));
 const graphql_1 = require("graphql");
 const organization_1 = __importDefault(require("../types/organization"));
-const { auth, createUser, createOrganization, updateOrganization, deleteOrganization, } = resolvers_1.default;
+const validate_1 = require("../../utils/validate");
+const authenticate_1 = require("../../utils/authenticate");
+const { auth, createUser, createOrganization, updateOrganization, deleteOrganization, deleteOrganizationByCompany, deleteUser, } = resolvers_1.default;
 exports.signIn = () => {
     return {
         type: user_1.default,
@@ -23,8 +25,11 @@ exports.signIn = () => {
                 description: "Enter password, will be automatically hashed",
             },
         },
-        resolve(parent, fields) {
-            return auth(fields);
+        resolve(_, fields, context) {
+            const { error } = validate_1.signinUserValidation(fields);
+            if (error)
+                throw new Error(error.details[0].message);
+            return auth(fields, context);
         },
     };
 };
@@ -51,6 +56,9 @@ exports.signUp = () => {
             },
         },
         resolve(parent, fields) {
+            const { error } = validate_1.createUserValidation(fields);
+            if (error)
+                throw new Error(error.details[0].message);
             return createUser(fields);
         },
     };
@@ -85,8 +93,13 @@ exports.createOrg = () => {
                 description: "Array of products specific to an organization",
             },
         },
-        resolve(parent, fields) {
-            return createOrganization(fields);
+        resolve(parent, fields, context) {
+            const { error } = validate_1.organizationSchema(fields);
+            if (error)
+                throw new Error(error.details[0].message);
+            if (authenticate_1.isAuthenticated(context)) {
+                return createOrganization(fields);
+            }
         },
     };
 };
@@ -120,8 +133,10 @@ exports.updateOrg = () => {
                 description: "Array of products specific to an organization",
             },
         },
-        resolve(parent, fields) {
-            return updateOrganization(fields);
+        resolve(parent, fields, context) {
+            if (authenticate_1.isAuthenticated(context)) {
+                return updateOrganization(fields);
+            }
         },
     };
 };
@@ -136,7 +151,41 @@ exports.deleteOrg = () => {
             },
         },
         resolve(parent, args, context, info) {
-            return deleteOrganization(args);
+            if (authenticate_1.isAuthenticated(context)) {
+                return deleteOrganization(args);
+            }
+        },
+    };
+};
+exports.deleteOrgByCompany = () => {
+    return {
+        type: organization_1.default,
+        description: "Delete organization from the database by company",
+        args: {
+            organization: {
+                type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
+                description: "Please enter a valid organization name",
+            },
+        },
+        resolve(parent, args, context, info) {
+            if (authenticate_1.isAuthenticated(context)) {
+                return deleteOrganizationByCompany(args);
+            }
+        },
+    };
+};
+exports.deleteUserFromDb = () => {
+    return {
+        type: user_1.default,
+        description: "Delete user from the database by company",
+        args: {
+            email: {
+                type: new graphql_1.GraphQLNonNull(graphql_1.GraphQLString),
+                description: "Please enter a valid authenicated user email",
+            },
+        },
+        resolve(parent, args, context, info) {
+            return deleteUser(args);
         },
     };
 };
