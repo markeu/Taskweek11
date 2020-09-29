@@ -189,7 +189,7 @@ export const deleteOrgByCompany = () => {
 export const deleteUserFromDb = () => {
   return {
     type: UserType,
-    description: "Delete user from the database by company",
+    description: "Delete user by company",
     args: {
       email: {
         type: new GraphQLNonNull(GraphQLString),
