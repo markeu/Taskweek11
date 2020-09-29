@@ -13,23 +13,23 @@ afterAll(() => {
 });
 
 describe("Test for query", () => {
-  // it("it should get all organizations from the database", (done) => {
-  //   request
-  //     .post("/graphql")
-  //     .send({
-  //       query: "{ organizations{ id, organization} }",
-  //     })
-  //     .set("Accept", "application/json")
-  //     .expect("Content-Type", /json/)
-  //     .end(function (err, res) {
-  //       if (err) return done(err);
-  //       expect(res.body).toBeInstanceOf(Object);
+  it("it should get all organizations from the database", (done) => {
+    request
+      .post("/graphql")
+      .send({
+        query: "{ organizations{ id, organization} }",
+      })
+      .set("Accept", "application/json")
+      .expect("Content-Type", /json/)
+      .end(function (err, res) {
+        if (err) return done(err);
+        expect(res.body).toBeInstanceOf(Object);
 
-  //       expect(res.body.data.organizations).toBeTruthy();
-  //       expect(res.body.data.organizations.length).toBeGreaterThan(1);
-  //       done();
-  //     });
-  // });
+        expect(res.body.data.organizations).toBeTruthy();
+        expect(res.body.data.organizations.length).toBeGreaterThan(1);
+        done();
+      });
+  });
 
   it("it should get one organziation from the database", (done) => {
     request

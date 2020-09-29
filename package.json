@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "nodemon --watch",
+        "build": "bash -e scripts/build.sh",
         "test": "jest --forceExit"
     },
     "repository": {
