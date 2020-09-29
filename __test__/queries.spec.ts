@@ -24,6 +24,7 @@ describe("Test for query", () => {
       .end(function (err, res) {
         if (err) return done(err);
         expect(res.body).toBeInstanceOf(Object);
+
         expect(res.body.data.organizations).toBeTruthy();
         expect(res.body.data.organizations.length).toBeGreaterThan(1);
         done();
