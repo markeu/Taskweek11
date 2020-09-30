@@ -6,7 +6,9 @@
     "scripts": {
         "start": "nodemon --watch",
         "build": "bash -e scripts/build.sh",
-        "test": "jest ./__test__/queries.spec.ts --forceExit"
+        "test": "jest ./__test__/queries.spec.ts --forceExit",
+        "tsc": "tsc",
+        "postinstall": "npx tsc"
     },
     "repository": {
         "type": "git",
