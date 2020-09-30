@@ -4,13 +4,13 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import mongoose from "mongoose";
 import jwt from "express-jwt";
-import dotenv from "dotenv";
+//import dotenv from "dotenv";
 import { graphqlHTTP } from "express-graphql";
 import GraphQlSchema from "./graphql";
 import User from "./models/user";
 import { includeAccessToken } from "./utils/authenticate";
 
-dotenv.config();
+//dotenv.config();
 
 /**
  * Connect to MongoDB.
