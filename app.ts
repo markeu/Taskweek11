@@ -50,15 +50,15 @@ const port = 8080;
 /**
  * GraphQL server
  */
-// app.use(
-//   "/graphql",
-//   jwt({
-//     secret: "12345",
-//     requestProperty: "auth",
-//     algorithms: ["RS256"],
-//     credentialsRequired: false,
-//   })
-// );
+app.use(
+  "/graphql",
+  jwt({
+    secret: "12345",
+    requestProperty: "auth",
+    algorithms: ["RS256"],
+    credentialsRequired: false,
+  })
+);
 
 app.use("/graphql", async (req: any, res, done) => {
   req.auth = "philipe@gmail.com";
