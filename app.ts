@@ -4,30 +4,25 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import mongoose from "mongoose";
 import jwt from "express-jwt";
-//import dotenv from "dotenv";
+import dotenv from "dotenv";
 import { graphqlHTTP } from "express-graphql";
 import GraphQlSchema from "./graphql";
 import User from "./models/user";
 import { includeAccessToken } from "./utils/authenticate";
 
-//dotenv.config();
+dotenv.config();
 
 /**
  * Connect to MongoDB.
  */
 
-//mongodb+srv://markeu:uzochukwu1!@cluster0-1kkhs.mongodb.net/organization
-//mongodb://127.0.0.1/organization
 mongoose
-  .connect(
-    "mongodb+srv://markeu:uzochukwu1!@cluster0-1kkhs.mongodb.net/organization",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-    }
-  )
+  .connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.log(err.message));
 
@@ -55,15 +50,15 @@ const port = 8080;
 /**
  * GraphQL server
  */
-app.use(
-  "/graphql",
-  jwt({
-    secret: "12345",
-    requestProperty: "auth",
-    algorithms: ["RS256"],
-    credentialsRequired: false,
-  })
-);
+// app.use(
+//   "/graphql",
+//   jwt({
+//     secret: "12345",
+//     requestProperty: "auth",
+//     algorithms: ["RS256"],
+//     credentialsRequired: false,
+//   })
+// );
 
 app.use("/graphql", async (req: any, res, done) => {
   req.auth = "philipe@gmail.com";
