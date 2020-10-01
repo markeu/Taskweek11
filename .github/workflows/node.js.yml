@@ -10,6 +10,7 @@ jobs:
   build:
     env:
       MONGO_URL: ${{secrets.MONGO_URL}}
+      JWT_SECRET: ${{secrets.JWT_SECRET}}
     runs-on: ubuntu-latest
 
     steps:
